@@ -1,0 +1,114 @@
+/* ============================================================
+   animations.css — Scroll & Page Transition Animations
+   ============================================================ */
+
+/* ── Page Transition ────────────────────────────────────── */
+.page-transition {
+  position: fixed; inset: 0;
+  background: var(--accent);
+  z-index: 99999;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  pointer-events: none;
+}
+.page-transition.enter   { animation: ptEnter 0.5s cubic-bezier(0.16,1,0.3,1) forwards; }
+.page-transition.exit    { animation: ptExit  0.5s cubic-bezier(0.16,1,0.3,1) forwards; }
+
+@keyframes ptEnter {
+  from { transform: scaleY(0); transform-origin: bottom; }
+  to   { transform: scaleY(1); transform-origin: bottom; }
+}
+@keyframes ptExit {
+  from { transform: scaleY(1); transform-origin: top; }
+  to   { transform: scaleY(0); transform-origin: top; }
+}
+
+/* ── Scroll Reveal Base ─────────────────────────────────── */
+.reveal-up,
+.reveal-left,
+.reveal-right,
+.reveal-fade {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+              transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  transition-delay: var(--delay, 0s);
+}
+
+.reveal-up    { transform: translateY(40px); }
+.reveal-left  { transform: translateX(-50px); }
+.reveal-right { transform: translateX(50px); }
+.reveal-fade  { transform: scale(0.97); }
+
+.reveal-up.visible,
+.reveal-left.visible,
+.reveal-right.visible,
+.reveal-fade.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Navbar Active Link ─────────────────────────────────── */
+@keyframes navActive {
+  from { opacity: 0; transform: scaleX(0); }
+  to   { opacity: 1; transform: scaleX(1); }
+}
+
+/* ── Shimmer for skeleton states ────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+/* ── Card entrance stagger ──────────────────────────────── */
+.project-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1),
+              transform 0.6s cubic-bezier(0.16,1,0.3,1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+.project-card.card-visible { opacity: 1; transform: translateY(0); }
+
+/* ── Spotlight border pulse ─────────────────────────────── */
+@keyframes borderPulse {
+  0%,100% { border-color: rgba(108,99,255,0.3); }
+  50%      { border-color: rgba(108,99,255,0.7); box-shadow: 0 0 40px rgba(108,99,255,0.2); }
+}
+.experience__spotlight {
+  animation: borderPulse 4s ease-in-out infinite;
+}
+
+/* ── Button ripple ──────────────────────────────────────── */
+.btn .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transform: scale(0);
+  animation: ripple 0.6s ease-out;
+  pointer-events: none;
+}
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ── Tag hover float ────────────────────────────────────── */
+.tech-tag { animation: none; }
+.tech-tag:nth-child(odd):hover  { animation: tagFloat1 0.4s ease; }
+.tech-tag:nth-child(even):hover { animation: tagFloat2 0.4s ease; }
+@keyframes tagFloat1 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px) rotate(-1deg); } }
+@keyframes tagFloat2 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px) rotate(1deg); } }
+
+/* ── Social icon hover ──────────────────────────────────── */
+.social-icon:hover i {
+  animation: iconBounce 0.4s cubic-bezier(0.36,0.07,0.19,0.97);
+}
+@keyframes iconBounce {
+  0%  { transform: scale(1); }
+  30% { transform: scale(1.4); }
+  60% { transform: scale(0.9); }
+  100%{ transform: scale(1); }
+}
+
+/* ── Number counter ─────────────────────────────────────── */
+.stat__num { display: inline-block; }
